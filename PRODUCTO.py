@@ -1,33 +1,32 @@
+import pandas as pd
 class PRODUCTO:
-    def __init__(self, idProducto, nombre, descripcion, precio, cantidad):
-        self.idProducto = idProducto
-        self.nombre = nombre
-        self.descripcion = descripcion
-        self.precio = precio
-        self.cantidad = cantidad
-    
-    def actualizarPrecio(self, nuevoPrecio):
+    def __init__(self, ruta):
+        self.ruta = ruta
+        
+    def actualizarPrecio(self, IdProducto, nuevoPrecio):
         """Actualizar el precio del producto."""
-        self.precio = nuevoPrecio
-    
-    def actualizarCantidad(self, nuevaCantidad):
+        productos = pd.read_csv(self.ruta)
+        productos['ID'] = productos['ID'].astype(str)
+
+        if IdProducto not in productos['ID'].values:
+            print(f"Producto con ID {IdProducto} no encontrado.")
+            return
+
+
+        productos.loc[productos['ID'] == IdProducto, 'Precio por Unidad'] = nuevoPrecio
+        productos.to_csv(self.ruta, index=False)
+        print(f"El precio del producto con ID {IdProducto} ha sido actualizado a {nuevoPrecio}.")
+
+    def actualizarCantidad(self, IdProducto, nuevaCantidad):
         """Actualizar la cantidad en stock del producto."""
         self.cantidad = nuevaCantidad
-    
-    def obtenerInformacion(self):
-        """Obtener información detallada del producto."""
-        return (f"ID: {self.idProducto}\n"
-                f"Nombre: {self.nombre}\n"
-                f"Descripción: {self.descripcion}\n"
-                f"Precio: {self.precio}\n"
-                f"Cantidad en Stock: {self.cantidad}")
+        productos = pd.read_csv(self.ruta)
+        productos['ID'] = productos['ID'].astype(str)
 
-    def to_dict(self):
-        """Convertir el producto en un diccionario para agregarlo al DataFrame."""
-        return {
-            'ID': self.idProducto,
-            'Nombre': self.nombre,
-            'Descripción': self.descripcion,
-            'Precio': self.precio,
-            'Cantidad en Stock': self.cantidad
-        }
+        if IdProducto not in productos['ID'].values:
+            print(f"Producto con ID {IdProducto} no encontrado.")
+            return
+        productos.loc[productos['ID'] == IdProducto, 'Cantidad en Stock'] = nuevaCantidad
+        productos.to_csv(self.ruta, index=False)
+        print(f"La cantidad del producto con ID {IdProducto} ha sido actualizado a {nuevaCantidad}.")
+    
