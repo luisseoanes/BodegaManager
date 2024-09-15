@@ -127,3 +127,7 @@ class TIENDA:
         PRODUCTO.actualizarPrecio(Producto, IdProducto, NuevoPrecio)
 
     def actualizarCantidad(self):
+        IdProducto = input("Ingrese el ID del producto: ")
+        NuevaCantidad = float(input("Ingrese la nueva cantidad del producto: "))  # Asegúrate de convertir a float
+        Producto = PRODUCTO(os.path.join(self.ruta_tienda, 'bodega.csv'))
+        PRODUCTO.actualizarCantidad(Producto, IdProducto, NuevaCantidad)
