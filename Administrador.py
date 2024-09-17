@@ -45,4 +45,9 @@ class ADMINISTRADOR:
         proveedor = PROVEEDOR(idProveedor, self.tienda)
         PROVEEDOR.ObtenerContacto(proveedor)
     
-    def ActualizarContacto(self):
+     def ActualizarContacto(self):
+        idProveedor = input("Ingrese el ID del proveedor a contactar: ")
+        nuevotelefono = input("Ingrese el nuevo telefono: ")
+        nuevaDireccion = input("Ingrese la nueva direccion: ")
+        proveedor = PROVEEDOR(idProveedor, self.tienda)
+        proveedor.ActualizarDatos(nuevotelefono, nuevaDireccion)
