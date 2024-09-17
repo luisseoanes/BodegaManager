@@ -1,5 +1,6 @@
 import csv
 import os
+from Verificaciones import Verificaciones
 
 class USUARIO:
     def __init__(self, usuario, email, contraseña):
@@ -54,6 +55,17 @@ class USUARIO:
 
     def CrearCuenta(self, TipoCuenta, Tienda):
         """Crear una nueva cuenta y guardarla en el archivo CSV."""
+        Comprobacion = Verificaciones(self.email, TipoCuenta)
+
+        if not Comprobacion.ValidoEmail():
+            print("El correo electrónico no es válido.")
+            return False
+        
+        if not Comprobacion.ValidoTCuenta():
+            print("El tipo de cuenta no valido (Empleado o Administrador)")
+            return False
+        
+        
         usuarios = self.cargarUsuarios()
         if self.usuario in usuarios:
             print("El usuario ya existe.")
